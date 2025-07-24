@@ -1,41 +1,49 @@
-# Configuração de ferramentas básicas para configuração do ambiente
+# ✨ Configuração de Ferramentas Básicas para o Ambiente Linux
 
-### Curl
+---
 
-Você pode verificar a versão instalada com o comando:
+## 🚪 Curl
+
+✅ **Verificando se está instalado:**
+
 ```bash
 curl --version
 ```
 
-Caso não esteja instalado, basta executar o comando:
+🚫 **Se não estiver instalado:**
+
 ```bash
-sudo apt install -y git
+sudo apt install -y curl
 ```
 
-------------------------------------------
+---
 
-### Git
+## 💾 Git
 
-Você pode verificar a versão instalada com o comando:
+✅ **Verificando se está instalado:**
+
 ```bash
 git --version
 ```
 
-Caso não esteja instalado, basta executar o comando:
+🚫 **Se não estiver instalado:**
+
 ```bash
 sudo apt install -y git
 ```
 
-------------------------------------------
+---
 
-### OpenSSH Client (que tem a ferramenta ssh-keygen)
+## 🔐 OpenSSH Client (inclui `ssh-keygen`)
 
-Você pode verificar a versão instalada com o comando:
+✅ **Verificando se está instalado:**
+
 ```bash
 ssh -V
 ```
 
-Caso não esteja instalado, basta executar o comando:
+🚫 **Se não estiver instalado:**
+
 ```bash
 sudo apt install -y openssh-client
 ```
