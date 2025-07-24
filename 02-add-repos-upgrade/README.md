@@ -1,4 +1,4 @@
-# Adicionando mais repositórios e atualizando sistema
+# Adicionando mais repositórios e atualizando o sistema
 
 ### 💾 Baixando keyrings
 
@@ -50,7 +50,7 @@ echo "deb [signed-by=/etc/apt/keyrings/dbeaver.gpg arch=amd64] https://dbeaver.i
 echo "deb [signed-by=/etc/apt/keyrings/docker.gpg arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-### 🔄 Atualizando sistema
+### 🔄 Atualizando o sistema
 
 **Atualize a lista de pacotes:**
 ```bash
