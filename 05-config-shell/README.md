@@ -44,3 +44,21 @@ source ~/.env_techne
 
 " >> ~/.bashrc
 ```
+
+
+
+## Update Alternatives
+
+**Atalho para abrir Edge rodando no host Windows**: (aproveitar logins já existentes)
+```bash
+sudo update-alternatives --install "/bin/host_edge" "edge" "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+```
+
+
+
+## Hushlogin
+
+Para impedir que o bash exiba mensagens diárias no login:
+```bash
+touch ~/.hushlogin
+```

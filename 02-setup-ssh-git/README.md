@@ -86,9 +86,9 @@ Se quiser usar o o WinMerge (do Windows abrindo arquivos no WSL):
 ```bash
 git config --global difftool.prompt false
 git config --global diff.tool winmerge
-git config --global difftool.winmerge.cmd '"/mnt/c/Program Files (x86)/WinMerge/WinMergeU.exe" -e -u "`wslpath -w $LOCAL`" "`wslpath -w $REMOTE`"'
+git config --global difftool.winmerge.cmd '"/mnt/c/Program Files/WinMerge/WinMergeU.exe" -e -u "`wslpath -w $LOCAL`" "`wslpath -w $REMOTE`"'
 git config --global merge.tool winmerge
-git config --global mergetool.winmerge.cmd '"/mnt/c/Program Files (x86)/WinMerge/WinMergeU.exe" -e -u -fm -wl -wr "`wslpath -w $LOCAL`" "`wslpath -w $MERGED`" "`wslpath -w $REMOTE`"'
+git config --global mergetool.winmerge.cmd '"/mnt/c/Program Files/WinMerge/WinMergeU.exe" -e -u -fm -wl -wr "`wslpath -w $LOCAL`" "`wslpath -w $MERGED`" "`wslpath -w $REMOTE`"'
 ```
 
 Se quiser usar o Meld (Linux):

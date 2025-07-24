@@ -1,17 +1,12 @@
 [user]
 	name = Henrico Scaranello
-
 [pull]
 	rebase = true
-
 [includeIf "gitdir:~/github/henricos/"]
     path = ~/.gitconfig-henricos
-
 [includeIf "gitdir:/mnt/c/Users/henrico/github/henricos/"]
     path = ~/.gitconfig-henricos
-
 [includeIf "gitdir:~/github/techne/"]
     path = ~/.gitconfig-henrico-scaranello
-
 [includeIf "gitdir:~/azuregit/"]
     path = ~/.gitconfig-henrico-scaranello
