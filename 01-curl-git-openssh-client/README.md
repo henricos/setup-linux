@@ -1,6 +1,6 @@
-# ✨ Configuração de Ferramentas Básicas para o Ambiente Linux
+# Configuração de Ferramentas Básicas para o Ambiente Linux
 
-## 🚪 Curl
+## 🌐 Curl
 
 ✅ **Verificando se está instalado:**
 
