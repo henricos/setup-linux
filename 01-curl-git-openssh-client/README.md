@@ -1,7 +1,5 @@
 # ✨ Configuração de Ferramentas Básicas para o Ambiente Linux
 
----
-
 ## 🚪 Curl
 
 ✅ **Verificando se está instalado:**
@@ -16,8 +14,6 @@ curl --version
 sudo apt install -y curl
 ```
 
----
-
 ## 💾 Git
 
 ✅ **Verificando se está instalado:**
@@ -31,8 +27,6 @@ git --version
 ```bash
 sudo apt install -y git
 ```
-
----
 
 ## 🔐 OpenSSH Client (inclui `ssh-keygen`)
 
