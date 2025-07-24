@@ -40,11 +40,8 @@ Esse arquivo define "Hosts" mapeando cada chave a um respectivo HostName
 Ao clonar um respositório, basta trocar HostName que fica depois do @ (ex: github.com) pelo "Host" definido no arquivo config (ex: github-henricos)
 
 Exemplo:
-
-- **Antes:**
-  git clone git@github.com:henricos/setup-workstation.git
-- **Depois:**
-  git clone git@github-henricos:henricos/setup-workstation.git
+- **Antes:** `git clone git@github.com:henricos/setup-workstation.git`
+- **Depois:** `git clone git@github-henricos:henricos/setup-workstation.git`
 
 -------------------------------------------
 
