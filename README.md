@@ -1,12 +1,25 @@
-# Roteiro de configuração de máquina de trabalho
+# 🧰 Roteiro de Configuração de Máquina de Trabalho
 
-### Como usar:
+Este repositório contém um passo a passo organizado para configurar rapidamente uma nova máquina de trabalho (ou pessoal)
 
-Basta seguir as instruções de cada pasta na sequência
+## 🚀 Como usar
 
-### Porque não usar um único script bash?
+1. Siga as instruções de cada pasta na **ordem sugerida**.
+2. Leia os arquivos `README.md` dentro de cada etapa com atenção.
+3. Execute os comandos indicados conforme o seu ambiente e suas necessidades.
 
-Como existem muitas combinações possíveis de máquina (pessoal, trabalho, wsl, linux,...) o script precisaria lidar com muitos parâmetros e tratar muitas caminhos possíveis.
-É melhor ir seguindo o roteiro passo a passo e tomando as decisões conforme vai aplicando.
-Mesmo fazendo de forma interativa, é possível configurar e instalar tudo em poucos minutos!
+> 💡 *Dica:* Tenha um terminal aberto, copie e cole os comandos conforme for seguindo. É possível configurar tudo em poucos minutos!
+
+---
+
+## ❓ Por que não usar um único script Bash?
+
+Embora seja tentador automatizar tudo com um único script, há **muitas variações de ambiente** (ex: máquina pessoal, corporativa, WSL, distros diferentes). Isso exigiria um script cheio de condicionais e interações, o que o tornaria complexo e difícil de manter.
+
+✨ **Vantagens do formato atual:**
+
+- Clareza sobre o que está sendo feito
+- Facilidade de adaptação a diferentes cenários
+- Controle total a cada etapa da instalação
+- Ideal para quem quer entender e personalizar seu ambiente
 
