@@ -14,13 +14,13 @@ ssh-keygen -t rsa -C "henrico.scaranello@techne.com.br" -f ~/.ssh/id_rsa_henrico
 
 ## Cadastrar a chave pessoal no GitHub pessoal
 
-Acessar github.com com a conta henricos
+Acessar https://github.com com a conta henricos
 Icone de Usuário > Settings > SSH and GPG Keys > New SSH Key
 Colar conteúdo do arquivo id_rsa_henricos.pub
 
 ## Cadastrar a chave profissional no GitHub profissional
 
-Acessar github.com com a conta henrico-scaranello
+Acessar  https://github.com com a conta henrico-scaranello
 Icone de Usuário > Settings > SSH and GPG Keys > New SSH Key
 Colar conteúdo do arquivo id_rsa_henrico_scaranello.pub
 
@@ -41,14 +41,20 @@ Ao clonar um respositório, basta trocar HostName que fica depois do @ (ex: gith
 
 Exemplos:
 
-- Antes:  git clone git@github.com:henricos/setup-workstation.git
-- Depois: git clone git@github-henricos:henricos/setup-workstation.git
+**Antes:**
+git clone git@github.com:henricos/setup-workstation.git
+**Depois:**
+git clone git@github-henricos:henricos/setup-workstation.git
 
-- Antes:  git clone git@github.com:technecloud/edu-lyc-lyceum.git
-- Depois: git clone git@github-henrico-scaranello:technecloud/edu-lyc-lyceum.git
+**Antes:**
+git clone git@github.com:technecloud/edu-lyc-lyceum.git
+**Depois:**
+git clone git@github-henrico-scaranello:technecloud/edu-lyc-lyceum.git
 
-- Antes:  git clone git@ssh.dev.azure.com:v3/technecloud/Lyceum/poc-mcp-server-lyceum
-- Depois: git clone git@azure-henrico-scaranello:v3/technecloud/Lyceum/poc-mcp-server-lyceum.git
+**Antes:**
+git clone git@ssh.dev.azure.com:v3/technecloud/Lyceum/poc-mcp-server-lyceum
+**Depois:**
+git clone git@azure-henrico-scaranello:v3/technecloud/Lyceum/poc-mcp-server-lyceum.git
 
 -------------------------------------------
 
