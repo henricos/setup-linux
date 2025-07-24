@@ -1,4 +1,4 @@
-# 🧰 Roteiro de Configuração de Máquina de Trabalho
+# Roteiro de Configuração de Máquina de Trabalho
 
 Este repositório contém um passo a passo organizado para configurar rapidamente uma nova máquina de trabalho (ou pessoal)
 
