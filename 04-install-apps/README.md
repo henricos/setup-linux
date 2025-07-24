@@ -10,42 +10,42 @@ sudo apt install -y unzip
 sudo apt install -y python3 python3-pip python3-venv
 ```
 
-**MS Core Fonts **: (irá pedir confirmação em uma janela)
+**MS Core Fonts**: (irá pedir confirmação em uma janela)
 ```bash
 sudo apt install -y ttf-mscorefonts-installer
 ```
 
-**OpenJDK 11 **:
+**OpenJDK 11**:
 ```bash
 sudo apt install -y openjdk-11-jdk
 ```
 
-**OpenJDK 17 **:
+**OpenJDK 17**:
 ```bash
 sudo apt install -y openjdk-17-jdk
 ```
 
-**Google Chrome **:
+**Google Chrome**:
 ```bash
 sudo apt install -y google-chrome-stable
 ```
 
-**Microsoft Edge **:
+**Microsoft Edge**:
 ```bash
 sudo apt install -y microsoft-edge-stable
 ```
 
-**VS Code **:
+**VS Code**:
 ```bash
 sudo apt install -y code
 ```
 
-**DBeaver CE **:
+**DBeaver CE**:
 ```bash
 sudo apt install -y dbeaver-ce
 ```
 
-**Drivers Impressoras HP **:
+**Drivers Impressoras HP**:
 ```bash
 sudo apt install hplip hplip-gui
 ```
