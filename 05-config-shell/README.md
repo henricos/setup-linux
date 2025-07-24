@@ -39,8 +39,8 @@ parse_git_branch() {
 export PS1='\[\033[01;32m\][\w] \[\e[91m\]\$(parse_git_branch)\[\e[00m\] -> '
 
 # carrega arquivo de variaveis de ambiente
-source ~/.env_techne
 source ~/.env_pessoal
+source ~/.env_techne
 
 " >> ~/.bashrc
 ```
