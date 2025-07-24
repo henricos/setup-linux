@@ -7,7 +7,7 @@ sudo apt install -y unzip
 
 **Python 3**:
 ```bash
-sudo apt install -y python3 python3-pip python3-venv
+sudo apt install -y python3 python3-pip python3-venv python-is-python3
 ```
 
 **MS Core Fonts**: (irá pedir confirmação em uma janela)
