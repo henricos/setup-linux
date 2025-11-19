@@ -12,6 +12,11 @@ curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor
 curl -sSL https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/keyrings/google.gpg
 ```
 
+**Antigravity:**
+```bash
+curl -sSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg
+```
+
 **DBeaver:**
 ```bash
 curl -sSL https://dbeaver.io/debs/dbeaver.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/dbeaver.gpg
@@ -38,6 +43,11 @@ echo "deb [signed-by=/etc/apt/keyrings/microsoft.gpg arch=amd64] https://package
 **Google:**
 ```bash
 echo "deb [signed-by=/etc/apt/keyrings/google.gpg arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+```
+
+**Antigravity:**
+```bash
+echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg arch=amd64] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | sudo tee /etc/apt/sources.list.d/antigravity.list > /dev/null
 ```
 
 **DBeaver:**
