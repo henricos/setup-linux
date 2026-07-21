@@ -47,11 +47,14 @@ ui_block_items() {
     done
 }
 
-# main_menu — level 1. Sets UI_CHOSEN_BLOCK. Returns 1 when the operator quits.
+# main_menu — level 1. Sets UI_CHOSEN_BLOCK (or UI_CHOSEN_ACTION for global
+# shortcuts). Returns 1 when the operator quits.
 main_menu() {
     ui_visible_blocks
     local choice i block id total installed
     while true; do
+        UI_CHOSEN_BLOCK=""
+        UI_CHOSEN_ACTION=""
         section_header "setup-linux"
         i=1
         for block in "${UI_BLOCKS[@]}"; do
@@ -66,11 +69,18 @@ main_menu() {
                 "$COLOR_DIM" "$total" "$installed" "$COLOR_OFF"
             (( i += 1 ))
         done
-        printf '\n  %s[Q]%s  sair\n\n' "$COLOR_BOLD" "$COLOR_OFF"
+        printf '\n  %s[U]%s  atualizar o sistema %s(apt update + upgrade)%s\n' \
+            "$COLOR_BOLD" "$COLOR_OFF" "$COLOR_DIM" "$COLOR_OFF"
+        printf '  %s[Q]%s  sair\n\n' "$COLOR_BOLD" "$COLOR_OFF"
         read -rp "  Escolha: " choice || return 1
         printf '\n'
         case "${choice,,}" in
             q) return 1 ;;
+            u)
+                # shellcheck disable=SC2034  # consumed by setup.sh
+                UI_CHOSEN_ACTION="system_upgrade"
+                return 0
+                ;;
             '') ;;
             *)
                 if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#UI_BLOCKS[@]} )); then

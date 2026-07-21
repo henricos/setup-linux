@@ -118,8 +118,8 @@ print_summary() {
         esac
     done
     printf '\n'
-    if [[ "${ITEM_RESULT[dotfiles]:-}" == "ok" ]]; then
-        log_info "Lembrete: com as chaves SSH instaladas, abra um novo terminal e troque os remotes dos repositórios de HTTPS para SSH."
+    if [[ "${ITEM_RESULT[dotfiles_clone]:-}" == "ok" ]]; then
+        log_info "Próximo passo: execute ~/github/henricos/dotfiles/bin/bootstrap.sh para instalar chaves e configurações pessoais; depois troque os remotes dos repositórios de HTTPS para SSH."
     fi
     if (( failures > 0 )); then
         log_error "$failures item(ns) falharam. Detalhes: $LOG_FILE"

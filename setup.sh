@@ -56,10 +56,14 @@ main() {
     request_sudo
     log_info "Log desta execução: $LOG_FILE"
 
-    # Level 1: pick a block; level 2: mark items and confirm. Quitting the
-    # main menu prints the session summary.
+    # Level 1: pick a block (or a global action); level 2: mark items and
+    # confirm. Quitting the main menu prints the session summary.
     while main_menu; do
-        if item_menu "$UI_CHOSEN_BLOCK"; then
+        if [[ -n "$UI_CHOSEN_ACTION" ]]; then
+            run_items "$UI_CHOSEN_ACTION"
+            printf '\n'
+            read -rp "  Enter para voltar ao menu..." _ || true
+        elif item_menu "$UI_CHOSEN_BLOCK"; then
             run_items "${UI_SELECTED_ITEMS[@]}"
             printf '\n'
             read -rp "  Enter para voltar ao menu..." _ || true

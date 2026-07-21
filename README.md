@@ -20,13 +20,13 @@ an existing checkout, just run `./setup.sh`.
 
 | Block | Items | Shown when |
 |---|---|---|
-| Básico | curl, git, openssh-client | always |
-| Repositórios | Microsoft Edge/VS Code/prod, Google Chrome, Antigravity, DBeaver, Docker; system update+upgrade | always |
-| Apps | unzip, Python 3, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, HP drivers, ODBC 18 | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
-| Servidor | OpenSSH Server, Docker Engine | always |
-| Sistema | repository folders (`~/github/...`, `~/azuregit`) | always |
+| Básico | curl, git, openssh-client, repository folders (`~/github/...`, `~/azuregit`), clone of the [dotfiles](https://github.com/henricos/dotfiles) project | always |
+| Repositórios | Microsoft Edge/VS Code/prod, Google Chrome, Antigravity, DBeaver, Docker | always |
+| Apps | unzip, Python 3, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, HP drivers, ODBC 18, OpenSSH Server, Docker Engine | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
 | WSL | Windows default browser via `wslu`/`wslview` | WSL only |
-| Dotfiles | clone + bootstrap the [dotfiles](https://github.com/henricos/dotfiles) project | always (last) |
+
+The main menu also offers `[U]` — a global action that runs
+`apt update + upgrade` (package list refresh before installs is automatic).
 
 ## Behavior
 

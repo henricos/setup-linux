@@ -14,17 +14,25 @@
    re-executes from the checkout.
 
 3. The interactive menu appears: pick a block, then mark the items the
-   machine needs — apt repositories, applications, server basics, system
-   folders, WSL browser integration.
+   machine needs — baseline tools and folders, apt repositories,
+   applications, WSL browser integration.
 
-4. The last menu item, **Dotfiles**, clones the sibling
-   [`dotfiles`](https://github.com/henricos/dotfiles) repository (also public,
-   also anonymous HTTPS) and runs its `bin/bootstrap.sh`, then offers to run
-   `dot setup` — which asks for the age key passphrase and restores SSH keys,
-   git identities and shell configuration.
+4. The Básico block includes **cloning** the sibling
+   [`dotfiles`](https://github.com/henricos/dotfiles) repository (also
+   public, also anonymous HTTPS). The clone is the only integration point —
+   there is deliberately no bootstrap chaining: the dotfiles repo owns its
+   own setup experience, so the next step is manual:
 
-5. After the dotfiles step, open a new terminal and switch repository remotes
-   from HTTPS to SSH (the summary prints a reminder).
+   ```bash
+   ~/github/henricos/dotfiles/bin/bootstrap.sh
+   ```
+
+   That asks for the age key passphrase and restores SSH keys, git
+   identities and shell configuration (the setup summary prints this
+   reminder).
+
+5. After the dotfiles bootstrap, open a new terminal and switch repository
+   remotes from HTTPS to SSH.
 
 The only secret that lives outside the repositories is the **age key
 passphrase** (in your head / password manager).

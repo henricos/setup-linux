@@ -23,6 +23,16 @@ What changed:
 - **Single menu, no machine profiles.** Items are picked manually on each
   run; environment-specific items (WSL, Ubuntu-only packages) appear only
   when the environment matches. Everything starts unchecked.
+- **Pure-CLI UI, no curses.** whiptail was tried and rejected; the menu is
+  plain `printf` + colors + `read`, two levels (block → items), in the style
+  of the `dev-tools` scripts.
+- **System upgrade is a global `[U]` action** in the main menu, not a
+  checklist item — package-list refresh before installs is automatic, so
+  only the upgrade needed a home.
+- **No dotfiles bootstrap chaining.** The setup only *clones* the dotfiles
+  repo (Básico block); running its bootstrap is a manual next step. This
+  keeps the repos decoupled (setup-linux does not know the dotfiles internal
+  interface) and keeps interactive prompts out of batch runs.
 - **Repo renamed to `setup-linux`** — it now also covers the Debian home
   server, so "workstation" was wrong. The empty `setup-home-server` repo is
   deleted; this repo absorbs its (never written) scope.
@@ -37,7 +47,7 @@ What changed:
 | 01 curl/git/openssh-client | Kept — "Básico" block |
 | 02 SSH keygen + registering keys on GitHub/Azure | **Removed** — fixed keys live encrypted in `dotfiles`, already registered on services |
 | 02 `files/config` (SSH) and `.gitconfig*` | **Removed** — `dotfiles` versions newer copies (ed25519, 3 identities) |
-| 02 repo folders | Kept — "Sistema" block; now `~/github/henricos`, `~/github/jarbas-caramello`, `~/azuregit` (no more `/mnt/c/...`, no `~/github/techne`) |
+| 02 repo folders | Kept — end of "Básico" block, one item per folder: `~/github/henricos`, `~/github/jarbas-caramello`, `~/azuregit` (no more `/mnt/c/...`, no `~/github/techne`) |
 | 02 difftool (Meld/WinMerge) | **Removed** — no longer used |
 | 03 apt repos + upgrade | Kept — "Repositórios" block, per-repo selection |
 | 04 apps | Kept — "Apps" block, per-app selection |
@@ -45,7 +55,7 @@ What changed:
 | 05 git prompt + `.env` loading in bashrc | **Removed** — `dotfiles` `shell/bashrc.sh` owns shell config |
 | 05 `host_edge` update-alternatives | **Replaced** by `wslu`/`wslview` (WSL block); `BROWSER=wslview` in `dotfiles` |
 | 05 `.hushlogin` | Moved to `dotfiles` |
-| (new) openssh-server, Docker Engine | Added — "Servidor" block for the Debian home server |
+| (new) openssh-server, Docker Engine | Added to the "Apps" block (for the Debian home server, but selectable anywhere) |
 
 ## Known fixes over the old commands
 

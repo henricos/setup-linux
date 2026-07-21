@@ -82,7 +82,9 @@ register_item repo_docker "Repositórios" "Repositório Docker"
 check_repo_docker() { [[ -f /etc/apt/sources.list.d/docker.list ]]; }
 install_repo_docker() { ensure_repo_docker; }
 
-register_item system_upgrade "Repositórios" "Atualizar o sistema (update + upgrade)"
+# Hidden action (condition "false" keeps it out of every menu): triggered by
+# the [U] shortcut in the main menu.
+register_item system_upgrade "Sistema" "Atualizar o sistema (update + upgrade)" false
 install_system_upgrade() {
     run_cmd sudo apt-get update && touch "$APT_STAMP"
     run_cmd sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
