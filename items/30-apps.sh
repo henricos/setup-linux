@@ -9,6 +9,13 @@ register_item python3 "Apps" "Python 3 (pip, venv, python-is-python3)"
 check_python3() { command -v python3 >/dev/null && command -v pip3 >/dev/null; }
 install_python3() { apt_install python3 python3-pip python3-venv python-is-python3; }
 
+# On Ubuntu 24.04+/Debian 12+ gh comes from the distro apt archive. Also a
+# dependency of the dotfiles clone (items/40-config.sh), which installs it
+# on demand.
+register_item gh "Apps" "GitHub CLI (gh)"
+check_gh() { command -v gh >/dev/null; }
+install_gh() { apt_install gh; }
+
 register_item mscorefonts "Apps" "Microsoft Core Fonts"
 check_mscorefonts() { dpkg -s ttf-mscorefonts-installer >/dev/null 2>&1; }
 install_mscorefonts() {

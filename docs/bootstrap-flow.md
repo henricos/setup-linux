@@ -14,28 +14,37 @@
    re-executes from the checkout.
 
 3. The interactive menu appears: pick a block, then mark the items the
-   machine needs — baseline tools and folders, apt repositories,
-   applications, WSL browser integration.
+   machine needs — baseline tools, apt repositories, applications,
+   configuration (folders + dotfiles), WSL browser integration.
 
-4. The Básico block includes **cloning** the sibling
-   [`dotfiles`](https://github.com/henricos/dotfiles) repository (also
-   public, also anonymous HTTPS). The clone is the only integration point —
-   there is deliberately no bootstrap chaining: the dotfiles repo owns its
-   own setup experience, so the next step is manual:
+4. The Configurações block — meant to run **last**, after apps and repos —
+   creates the repository folders and **clones** the sibling
+   [`dotfiles`](https://github.com/henricos/dotfiles) repository, which is
+   **private**. The item installs the GitHub CLI (`gh`, distro apt) and
+   authenticates via the **device flow**: `gh auth login --web` prints a
+   one-time code to type at `github.com/login/device` from any browser —
+   the phone works, so headless machines are fine. `gh auth setup-git` then
+   lets plain `git` clone over HTTPS with the gh token. No token, password
+   or key is ever typed on the new machine. The clone is the only
+   integration point — there is deliberately no bootstrap chaining: the
+   dotfiles repo owns its own setup experience, so the next step is manual:
 
    ```bash
-   ~/github/henricos/dotfiles/bin/bootstrap.sh
+   ~/github/henricos/dotfiles/bin/dot setup
    ```
 
-   That asks for the age key passphrase and restores SSH keys, git
-   identities and shell configuration (the setup summary prints this
-   reminder).
+   That installs the dotfiles prerequisites (sops, age — sudo only when
+   something is missing), asks for the age key passphrase and restores SSH
+   keys, git identities and shell configuration (the setup summary prints
+   this reminder).
 
 5. After the dotfiles bootstrap, open a new terminal and switch repository
-   remotes from HTTPS to SSH.
+   remotes from HTTPS to SSH. The gh token has broad scope (`repo`), so once
+   the real SSH keys are in place, `gh auth logout` is a good hygiene step.
 
 The only secret that lives outside the repositories is the **age key
-passphrase** (in your head / password manager).
+passphrase** (in your head / password manager). The GitHub authentication
+happens per machine via device flow — nothing to carry around.
 
 ## Division of responsibilities
 
@@ -48,16 +57,21 @@ Rule of thumb: if it requires `sudo` and changes the *system*, it belongs
 here; if it is *personal configuration or credentials*, it belongs in
 `dotfiles`.
 
-## Security rationale (why both repos can be public)
+## Security rationale
 
-- This repository contains only package installation and system configuration
-  commands — audited (files and full git history): no tokens, keys or
-  passwords ever committed.
-- The `dotfiles` repository encrypts every secret with sops+age. The age
-  private key is itself stored passphrase-encrypted (`age -p`, scrypt). Its
-  security anchors entirely on the passphrase strength: once public, the
-  ciphertexts are downloadable forever, so the passphrase must be strong and
-  an emergency key-rotation plan must exist.
+- **This repository is public**: it contains only package installation and
+  system configuration commands — audited (files and full git history): no
+  tokens, keys or passwords ever committed.
+- **The `dotfiles` repository is private** and additionally encrypts every
+  secret with sops+age; the age private key is itself stored
+  passphrase-encrypted (`age -p`, scrypt). Two independent layers: an
+  attacker would need both read access to the private repo *and* the age
+  passphrase. Keeping it private also hides metadata (env var names, key
+  file names, commit history) and keeps the age-key ciphertext off the
+  public internet.
+- Cloning the private repo on a fresh machine uses the GitHub CLI device
+  flow — the only credential involved is the GitHub session in the browser
+  where the one-time code is typed (protected by 2FA).
 - A pre-commit hook in `dotfiles` blocks accidental plaintext commits.
 
 ## WSL browser integration

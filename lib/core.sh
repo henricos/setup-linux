@@ -121,7 +121,7 @@ print_summary() {
     done
     printf '\n'
     if [[ "${ITEM_RESULT[dotfiles_clone]:-}" == "ok" ]]; then
-        log_info "Próximo passo: execute ~/github/henricos/dotfiles/bin/bootstrap.sh para instalar chaves e configurações pessoais; depois troque os remotes dos repositórios de HTTPS para SSH."
+        log_info "Próximo passo: execute ~/github/henricos/dotfiles/bin/dot setup para instalar chaves e configurações pessoais; depois troque os remotes dos repositórios de HTTPS para SSH."
     fi
     if (( failures > 0 )); then
         log_error "$failures item(ns) falharam. Detalhes: $LOG_FILE"

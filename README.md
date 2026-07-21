@@ -20,9 +20,10 @@ an existing checkout, just run `./setup.sh`.
 
 | Block | Items | Shown when |
 |---|---|---|
-| Básico | curl, git, openssh-client, repository folders (`~/github/...`, `~/azuregit`), clone of the [dotfiles](https://github.com/henricos/dotfiles) project | always |
+| Básico | curl, git, openssh-client | always |
 | Repositórios | Microsoft Edge/VS Code/prod, Google Chrome, Antigravity, DBeaver, Docker | always |
-| Apps | unzip, Python 3, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, HP drivers, ODBC 18, OpenSSH Server, Docker Engine | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
+| Apps | unzip, GitHub CLI, Python 3, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, HP drivers, ODBC 18, OpenSSH Server, Docker Engine | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
+| Configurações | repository folders (`~/github/...`, `~/azuregit`), clone of the private [dotfiles](https://github.com/henricos/dotfiles) project (GitHub CLI device-flow auth) | always |
 | WSL | Windows default browser via `wslu`/`wslview` | WSL only |
 
 The main menu also offers `[U]` — a global action that runs
@@ -40,9 +41,11 @@ The main menu also offers `[U]` — a global action that runs
 
 This repo owns the **system** (apt repos, packages, machine config) and holds
 zero secrets. Everything **personal** (SSH keys, git identities, env vars,
-shell config) lives encrypted (sops+age) in
-[`dotfiles`](https://github.com/henricos/dotfiles), which the last menu item
-bootstraps. Details in [`docs/bootstrap-flow.md`](docs/bootstrap-flow.md).
+shell config) lives encrypted (sops+age) in the **private**
+[`dotfiles`](https://github.com/henricos/dotfiles) repo. The clone item
+authenticates via the GitHub CLI device flow (one-time code typed at
+`github.com/login/device` from any browser — no token or key ever typed on
+the machine). Details in [`docs/bootstrap-flow.md`](docs/bootstrap-flow.md).
 
 ## Development
 
