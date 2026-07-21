@@ -11,7 +11,9 @@ COLOR_BOLD=$'\033[1m'
 COLOR_DIM=$'\033[2m'
 COLOR_OFF=$'\033[0m'
 
-LOG_DIR="$HOME/.local/state/setup-linux"
+# Logs live inside the repo checkout (gitignored). SCRIPT_DIR is set by
+# setup.sh before sourcing; the fallback covers direct sourcing in tests.
+LOG_DIR="${SCRIPT_DIR:-$PWD}/logs"
 LOG_FILE="$LOG_DIR/$(date +%Y%m%d-%H%M%S).log"
 # Per-run stamp: apt-get update runs once per run, re-forced by write_source.
 APT_STAMP="$LOG_DIR/.apt-updated.$$"

@@ -73,7 +73,7 @@ That's all — the menu, runner, logging and summary pick it up automatically.
   The summary lists ✓/✗ per item and the script exits 1 if anything failed.
 - `sudo -v` runs upfront with a background keepalive, so long installs never
   stop to ask for the password again.
-- Logs: `~/.local/state/setup-linux/<timestamp>.log`.
+- Logs: `logs/<timestamp>.log` inside the repo checkout (gitignored).
 
 ## apt helpers and dependencies
 

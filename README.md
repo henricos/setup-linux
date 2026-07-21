@@ -34,7 +34,7 @@ The main menu also offers `[U]` — a global action that runs
 - **Failure-isolated** — a failing item never aborts the rest; the final
   summary shows ✓/✗ per item.
 - **Menu status** — items already applied show a ✓ suffix.
-- Logs in `~/.local/state/setup-linux/`.
+- Logs in `logs/` inside the checkout (gitignored).
 
 ## Relation to `dotfiles`
 
