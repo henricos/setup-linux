@@ -69,7 +69,7 @@ item_installed() {
 # show_cmd <command line> — highlights the command being executed. It ends by
 # switching back to gray so the command's own output stays de-emphasized.
 show_cmd() {
-    printf '  %s$ %s%s\n' "${COLOR_BOLD}${COLOR_CYAN}" "$*" "${COLOR_OFF}${COLOR_GRAY}"
+    printf '%s$ %s%s\n' "${COLOR_BOLD}${COLOR_CYAN}" "$*" "${COLOR_OFF}${COLOR_GRAY}"
 }
 
 # run_cmd <command...> — show it highlighted, then execute it.
