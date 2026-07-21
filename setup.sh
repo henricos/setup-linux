@@ -54,23 +54,18 @@ done
 main() {
     initial_checks
     request_sudo
-    ensure_whiptail
+    log_info "Log desta execução: $LOG_FILE"
 
-    local selection
-    if ! selection=$(show_menu); then
-        echo "Instalação cancelada."
-        exit 0
-    fi
-    if [[ -z "$selection" ]]; then
-        echo "Nenhum item selecionado."
-        exit 0
-    fi
+    # Level 1: pick a block; level 2: mark items and confirm. Quitting the
+    # main menu prints the session summary.
+    while main_menu; do
+        if item_menu "$UI_CHOSEN_BLOCK"; then
+            run_items "${UI_SELECTED_ITEMS[@]}"
+            printf '\n'
+            read -rp "  Enter para voltar ao menu..." _ || true
+        fi
+    done
 
-    # whiptail returns ids quoted ("a" "b"); ids are internal, eval is safe.
-    local selected_ids=()
-    eval "selected_ids=($selection)"
-
-    run_items "${selected_ids[@]}"
     print_summary
 }
 

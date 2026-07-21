@@ -84,6 +84,6 @@ install_repo_docker() { ensure_repo_docker; }
 
 register_item system_upgrade "Repositórios" "Atualizar o sistema (update + upgrade)"
 install_system_upgrade() {
-    sudo apt-get update && touch "$APT_STAMP"
-    sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+    run_cmd sudo apt-get update && touch "$APT_STAMP"
+    run_cmd sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 }

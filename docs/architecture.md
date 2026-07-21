@@ -9,16 +9,29 @@
   anonymous HTTPS into `~/github/henricos/setup-linux` (or `git pull --ff-only`
   if already there) and re-executes itself from the checkout.
 - **Normal mode** — sources `lib/*.sh`, sources every `items/*.sh` (glob order
-  defines menu order), shows the whiptail checklist, runs the selected items
-  and prints a summary.
+  defines menu order), loops over the two-level menu (pick a block, then mark
+  items and confirm), runs the selected items and prints a session summary on
+  quit.
 
 ```
 setup.sh          entry point (bootstrap + orchestration)
 lib/core.sh       item registry, runner, logging, apt/keyring helpers
 lib/detect.sh     is_wsl, distro_family/codename/version, initial checks
-lib/ui.sh         whiptail checklist
+lib/ui.sh         pure-CLI two-level menu (blocks → items)
 items/NN-*.sh     declarative item registry, one file per block
 ```
+
+## UI
+
+No curses/dialog tools — plain `printf` + ANSI colors + `read`, in the style
+of the `dev-tools` scripts. Level 1 lists the blocks (with item/installed
+counts); level 2 lists the block's items with `[x]`/`[ ]` toggles (numbers
+toggle, `A` all, `N` none, `C` confirms, `V` goes back). Because it is plain
+stdin/stdout, the whole menu is scriptable in tests by piping input.
+
+During execution, each command line is echoed highlighted (bold cyan, `$ `
+prefix) via `run_cmd`/`show_cmd`, while command output renders in dark gray
+so it stays visually secondary.
 
 ## Item model
 
@@ -51,8 +64,8 @@ That's all — the menu, runner, logging and summary pick it up automatically.
 
 ## Execution model
 
-- `set -u -o pipefail` globally. **Never `set -e` globally** — it would kill
-  the script on whiptail's Cancel (rc=1) and other interactive negatives.
+- `set -u -o pipefail` globally. **Never `set -e` globally** — the menu loop
+  relies on non-zero returns (go back, quit, EOF on `read`) as normal flow.
 - Each item runs in a subshell with `set -euo pipefail`, piped through
   `tee -a $LOG_FILE`. `tee` keeps stdin attached to the TTY, so interactive
   items (the dotfiles age passphrase prompt) still work.

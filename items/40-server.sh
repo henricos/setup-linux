@@ -7,7 +7,7 @@ install_openssh_server() {
     apt_install openssh-server
     # Containers used for testing have no systemd; skip service management there.
     if pidof systemd >/dev/null 2>&1; then
-        sudo systemctl enable --now ssh
+        run_cmd sudo systemctl enable --now ssh
     fi
 }
 
@@ -16,6 +16,6 @@ check_docker_engine() { command -v docker >/dev/null; }
 install_docker_engine() {
     ensure_repo_docker
     apt_install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    sudo usermod -aG docker "$USER"
+    run_cmd sudo usermod -aG docker "$USER"
     echo "Usuário adicionado ao grupo docker. Faça logout/login para usar docker sem sudo."
 }

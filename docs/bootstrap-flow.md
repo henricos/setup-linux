@@ -13,9 +13,9 @@
    **anonymous HTTPS** (the repo is public — no git credentials needed) and
    re-executes from the checkout.
 
-3. The whiptail menu appears. Select whatever the machine needs: apt
-   repositories, applications, server basics, system folders, WSL browser
-   integration.
+3. The interactive menu appears: pick a block, then mark the items the
+   machine needs — apt repositories, applications, server basics, system
+   folders, WSL browser integration.
 
 4. The last menu item, **Dotfiles**, clones the sibling
    [`dotfiles`](https://github.com/henricos/dotfiles) repository (also public,

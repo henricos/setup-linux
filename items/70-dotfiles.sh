@@ -12,12 +12,12 @@ register_item dotfiles "Dotfiles" "Clonar e inicializar o projeto dotfiles"
 check_dotfiles() { [[ -d "$DOTFILES_DIR/.git" ]]; }
 install_dotfiles() {
     if [[ -d "$DOTFILES_DIR/.git" ]]; then
-        git -C "$DOTFILES_DIR" pull --ff-only || true
+        run_cmd git -C "$DOTFILES_DIR" pull --ff-only || true
     else
         mkdir -p "$(dirname "$DOTFILES_DIR")"
-        git clone "$DOTFILES_URL" "$DOTFILES_DIR"
+        run_cmd git clone "$DOTFILES_URL" "$DOTFILES_DIR"
     fi
-    bash "$DOTFILES_DIR/bin/bootstrap.sh"
+    run_cmd bash "$DOTFILES_DIR/bin/bootstrap.sh"
     local answer=""
     read -r -p "Executar 'dot setup' agora? Pedirá a passphrase da chave age. [s/N] " answer
     if [[ "$answer" =~ ^[sS]$ ]]; then

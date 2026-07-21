@@ -12,6 +12,6 @@ install_wsl_browser() {
     wslview_path=$(command -v wslview)
     # Apps honoring $BROWSER get BROWSER=wslview from the dotfiles project;
     # xdg-open ignores $BROWSER, hence the alternatives registration.
-    sudo update-alternatives --install /usr/bin/x-www-browser x-www-browser "$wslview_path" 1
-    sudo update-alternatives --set x-www-browser "$wslview_path"
+    run_cmd sudo update-alternatives --install /usr/bin/x-www-browser x-www-browser "$wslview_path" 1
+    run_cmd sudo update-alternatives --set x-www-browser "$wslview_path"
 }

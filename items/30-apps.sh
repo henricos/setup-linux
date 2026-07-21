@@ -13,6 +13,7 @@ register_item mscorefonts "Apps" "Microsoft Core Fonts"
 check_mscorefonts() { dpkg -s ttf-mscorefonts-installer >/dev/null 2>&1; }
 install_mscorefonts() {
     # Preseed the EULA so no ncurses dialog blocks the run.
+    show_cmd "echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | sudo debconf-set-selections"
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" |
         sudo debconf-set-selections
     if [[ "$(distro_family)" == "debian" ]]; then
@@ -72,5 +73,5 @@ check_msodbcsql18() { dpkg -s msodbcsql18 >/dev/null 2>&1; }
 install_msodbcsql18() {
     ensure_repo_microsoft_prod
     ensure_apt_updated
-    sudo ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y msodbcsql18
+    run_cmd sudo ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y msodbcsql18
 }

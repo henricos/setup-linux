@@ -13,8 +13,8 @@ sudo apt update && sudo apt install -y curl git && \
 ```
 
 The script clones itself into `~/github/henricos/setup-linux` and opens a
-checklist menu — pick only what this machine needs. From an existing
-checkout, just run `./setup.sh`.
+two-level menu: pick a block, then mark only what this machine needs. From
+an existing checkout, just run `./setup.sh`.
 
 ## What the menu offers
 

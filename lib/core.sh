@@ -3,8 +3,12 @@
 
 COLOR_RED=$'\033[0;31m'
 COLOR_GREEN=$'\033[0;32m'
-COLOR_YELLOW=$'\033[0;33m'
+COLOR_YELLOW=$'\033[1;33m'
 COLOR_BLUE=$'\033[0;34m'
+COLOR_CYAN=$'\033[0;36m'
+COLOR_GRAY=$'\033[90m'
+COLOR_BOLD=$'\033[1m'
+COLOR_DIM=$'\033[2m'
 COLOR_OFF=$'\033[0m'
 
 LOG_DIR="$HOME/.local/state/setup-linux"
@@ -58,37 +62,62 @@ item_installed() {
     declare -F "$check_fn" >/dev/null && "$check_fn"
 }
 
+# --- command display ---------------------------------------------------------
+
+# show_cmd <command line> — highlights the command being executed. It ends by
+# switching back to gray so the command's own output stays de-emphasized.
+show_cmd() {
+    printf '  %s$ %s%s\n' "${COLOR_BOLD}${COLOR_CYAN}" "$*" "${COLOR_OFF}${COLOR_GRAY}"
+}
+
+# run_cmd <command...> — show it highlighted, then execute it.
+run_cmd() {
+    show_cmd "$@"
+    "$@"
+}
+
 # --- runner ------------------------------------------------------------------
 
 # run_items <id...> — runs each item in an isolated subshell. A failing item
-# is recorded and never aborts the remaining ones.
+# is recorded and never aborts the remaining ones. Command lines are shown
+# highlighted (show_cmd/run_cmd); everything else renders in gray.
 run_items() {
-    log_info "Log desta execução: $LOG_FILE"
-    local id
+    local id rc
     for id in "$@"; do
-        echo
-        log_info "==> ${ITEM_DESC[$id]}" | tee -a "$LOG_FILE"
+        run_header "${ITEM_DESC[$id]}"
+        printf '==> %s\n' "${ITEM_DESC[$id]}" >> "$LOG_FILE"
+        printf '%s' "$COLOR_GRAY"
         # tee keeps stdin attached to the TTY, so interactive items still work.
         ( set -euo pipefail; "install_$id" ) 2>&1 | tee -a "$LOG_FILE"
-        if (( PIPESTATUS[0] == 0 )); then
+        rc=${PIPESTATUS[0]}
+        printf '%s' "$COLOR_OFF"
+        if (( rc == 0 )); then
             ITEM_RESULT[$id]=ok
+            printf '\n  %s✓ %s%s\n' "$COLOR_GREEN" "${ITEM_DESC[$id]}" "$COLOR_OFF"
         else
             ITEM_RESULT[$id]=failed
+            printf '\n  %s✗ %s%s  %s(detalhes: %s)%s\n' \
+                "$COLOR_RED" "${ITEM_DESC[$id]}" "$COLOR_OFF" \
+                "$COLOR_DIM" "$LOG_FILE" "$COLOR_OFF"
         fi
     done
 }
 
 print_summary() {
-    echo
-    log_info "Resumo:"
-    local id failures=0
+    local id failures=0 ran=0
+    for id in "${ITEMS[@]}"; do
+        [[ -n "${ITEM_RESULT[$id]:-}" ]] && (( ran += 1 ))
+    done
+    (( ran == 0 )) && return 0
+
+    run_header "Resumo"
     for id in "${ITEMS[@]}"; do
         case "${ITEM_RESULT[$id]:-}" in
-            ok)     echo "  ${COLOR_GREEN}✓ ${ITEM_DESC[$id]}${COLOR_OFF}" ;;
-            failed) echo "  ${COLOR_RED}✗ ${ITEM_DESC[$id]}${COLOR_OFF}"; (( failures += 1 )) ;;
+            ok)     printf '  %s✓ %s%s\n' "$COLOR_GREEN" "${ITEM_DESC[$id]}" "$COLOR_OFF" ;;
+            failed) printf '  %s✗ %s%s\n' "$COLOR_RED" "${ITEM_DESC[$id]}" "$COLOR_OFF"; (( failures += 1 )) ;;
         esac
     done
-    echo
+    printf '\n'
     if [[ "${ITEM_RESULT[dotfiles]:-}" == "ok" ]]; then
         log_info "Lembrete: com as chaves SSH instaladas, abra um novo terminal e troque os remotes dos repositórios de HTTPS para SSH."
     fi
@@ -115,12 +144,12 @@ request_sudo() {
 
 ensure_apt_updated() {
     [[ -f "$APT_STAMP" ]] && return 0
-    sudo apt-get update && touch "$APT_STAMP"
+    run_cmd sudo apt-get update && touch "$APT_STAMP"
 }
 
 apt_install() {
     ensure_apt_updated
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
+    run_cmd sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
 }
 
 # add_keyring <name> <url> — download and dearmor a signing key.
@@ -128,7 +157,8 @@ apt_install() {
 add_keyring() {
     local name=$1 url=$2
     command -v gpg >/dev/null 2>&1 || apt_install gnupg
-    sudo install -d -m 0755 /etc/apt/keyrings
+    run_cmd sudo install -d -m 0755 /etc/apt/keyrings
+    show_cmd "curl -fsSL $url | sudo gpg --dearmor --yes -o /etc/apt/keyrings/$name.gpg"
     curl -fsSL "$url" | sudo gpg --dearmor --yes -o "/etc/apt/keyrings/$name.gpg"
 }
 
@@ -138,11 +168,8 @@ write_source() {
     local name=$1 line=$2
     local file="/etc/apt/sources.list.d/$name.list"
     if [[ ! -f "$file" || "$(cat "$file")" != "$line" ]]; then
+        show_cmd "echo '$line' | sudo tee $file"
         echo "$line" | sudo tee "$file" >/dev/null
         rm -f "$APT_STAMP"
     fi
-}
-
-ensure_whiptail() {
-    command -v whiptail >/dev/null 2>&1 || apt_install whiptail
 }
