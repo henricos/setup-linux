@@ -52,6 +52,16 @@ ensure_repo_docker() {
     write_source docker "deb [signed-by=/etc/apt/keyrings/docker.gpg arch=amd64] https://download.docker.com/linux/$(distro_family) $(distro_codename) stable"
 }
 
+# PGDG (PostgreSQL Global Development Group) — ships client major versions
+# newer than the distro's own apt archive (needed to match a PostgreSQL
+# server newer than what Ubuntu/Debian bundle; pg_dump refuses to run
+# against a server newer than itself). Same codename suffix on Ubuntu/Debian.
+ensure_repo_postgresql() {
+    [[ -f /etc/apt/keyrings/postgresql.gpg ]] ||
+        add_keyring postgresql "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+    write_source postgresql "deb [signed-by=/etc/apt/keyrings/postgresql.gpg arch=amd64] https://apt.postgresql.org/pub/repos/apt $(distro_codename)-pgdg main"
+}
+
 # --- menu items ---------------------------------------------------------------
 
 register_item repo_microsoft_edge "Repositórios" "Repositório Microsoft Edge"
@@ -81,6 +91,10 @@ install_repo_dbeaver() { ensure_repo_dbeaver; }
 register_item repo_docker "Repositórios" "Repositório Docker"
 check_repo_docker() { [[ -f /etc/apt/sources.list.d/docker.list ]]; }
 install_repo_docker() { ensure_repo_docker; }
+
+register_item repo_postgresql "Repositórios" "Repositório PostgreSQL (PGDG)"
+check_repo_postgresql() { [[ -f /etc/apt/sources.list.d/postgresql.list ]]; }
+install_repo_postgresql() { ensure_repo_postgresql; }
 
 # Hidden action (condition "false" keeps it out of every menu): triggered by
 # the [U] shortcut in the main menu.

@@ -75,9 +75,15 @@ register_item hplip "Apps" "Drivers de impressora HP (hplip)" not_wsl
 check_hplip() { dpkg -s hplip >/dev/null 2>&1; }
 install_hplip() { apt_install hplip hplip-gui; }
 
-register_item postgresql_client "Apps" "PostgreSQL Client (psql, pg_dump)"
-check_postgresql_client() { command -v psql >/dev/null && command -v pg_dump >/dev/null; }
-install_postgresql_client() { apt_install postgresql-client; }
+# Pinned to major 17 to match the homelab PostgreSQL server (17.9): pg_dump
+# refuses to dump a server newer than itself, and the distro's own apt
+# archive only ships client 16 on Ubuntu 24.04 — hence the PGDG repo.
+register_item postgresql_client "Apps" "PostgreSQL Client 17 (psql, pg_dump)"
+check_postgresql_client() { dpkg -s postgresql-client-17 >/dev/null 2>&1; }
+install_postgresql_client() {
+    ensure_repo_postgresql
+    apt_install postgresql-client-17
+}
 
 register_item msodbcsql18 "Apps" "Driver ODBC 18 (msodbcsql18)"
 check_msodbcsql18() { dpkg -s msodbcsql18 >/dev/null 2>&1; }
