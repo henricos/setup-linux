@@ -75,6 +75,10 @@ register_item hplip "Apps" "Drivers de impressora HP (hplip)" not_wsl
 check_hplip() { dpkg -s hplip >/dev/null 2>&1; }
 install_hplip() { apt_install hplip hplip-gui; }
 
+register_item postgresql_client "Apps" "PostgreSQL Client (psql, pg_dump)"
+check_postgresql_client() { command -v psql >/dev/null && command -v pg_dump >/dev/null; }
+install_postgresql_client() { apt_install postgresql-client; }
+
 register_item msodbcsql18 "Apps" "Driver ODBC 18 (msodbcsql18)"
 check_msodbcsql18() { dpkg -s msodbcsql18 >/dev/null 2>&1; }
 install_msodbcsql18() {
