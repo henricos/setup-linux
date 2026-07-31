@@ -103,6 +103,31 @@ install_openssh_server() {
     fi
 }
 
+# nvm keeps Node.js version management out of apt entirely: any
+# distro-packaged nodejs is purged first so it can't compete, then Node LTS
+# is installed under nvm. install.sh is pinned to a known nvm release —
+# check https://github.com/nvm-sh/nvm#installing-and-updating for a newer one.
+register_item nvm_node "Apps" "nvm + Node.js LTS"
+check_nvm_node() {
+    [[ -s "$HOME/.nvm/nvm.sh" ]] || return 1
+    local -a node_bins=("$HOME"/.nvm/versions/node/*/bin/node)
+    [[ -x "${node_bins[0]}" ]]
+}
+install_nvm_node() {
+    if dpkg -s nodejs >/dev/null 2>&1; then
+        run_cmd sudo DEBIAN_FRONTEND=noninteractive apt-get purge --auto-remove -y nodejs
+    fi
+
+    export NVM_DIR="$HOME/.nvm"
+    if [[ ! -s "$NVM_DIR/nvm.sh" ]]; then
+        show_cmd "curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash"
+        curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
+    fi
+    # shellcheck disable=SC1091
+    \. "$NVM_DIR/nvm.sh"
+    run_cmd nvm install --lts
+}
+
 register_item docker_engine "Apps" "Docker Engine"
 check_docker_engine() { command -v docker >/dev/null; }
 install_docker_engine() {
