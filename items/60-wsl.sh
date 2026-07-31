@@ -7,6 +7,7 @@ check_wsl_browser() {
         [[ "$(readlink -f /etc/alternatives/x-www-browser 2>/dev/null)" == "$(command -v wslview)" ]]
 }
 install_wsl_browser() {
+    ensure_repo_wslu
     apt_install wslu
     local wslview_path
     wslview_path=$(command -v wslview)

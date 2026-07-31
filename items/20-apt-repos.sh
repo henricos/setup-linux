@@ -62,6 +62,24 @@ ensure_repo_postgresql() {
     write_source postgresql "deb [signed-by=/etc/apt/keyrings/postgresql.gpg arch=amd64] https://apt.postgresql.org/pub/repos/apt $(distro_codename)-pgdg main"
 }
 
+# wslutilities/wslu was archived upstream in 2025 and dropped from Ubuntu's
+# own archive on newer releases (confirmed missing on 26.04 "resolute").
+# On Ubuntu the maintained fallback is the wslutilities PPA, but it stopped
+# publishing new codenames after oracular (24.10) — pinned rather than
+# distro_codename(), which would just 404 on anything newer. On Debian,
+# which never carried wslu at all, use the project's own apt repo instead.
+ensure_repo_wslu() {
+    if is_ubuntu_family; then
+        [[ -f /etc/apt/keyrings/wslu.gpg ]] ||
+            add_keyring wslu "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x254F460F2970E18123046570C1D0E7E6AB4095D6"
+        write_source wslu "deb [signed-by=/etc/apt/keyrings/wslu.gpg arch=amd64] https://ppa.launchpadcontent.net/wslutilities/wslu/ubuntu oracular main"
+    else
+        [[ -f /etc/apt/keyrings/wslu.gpg ]] ||
+            add_keyring wslu "https://pkg.wslutiliti.es/public.key"
+        write_source wslu "deb [signed-by=/etc/apt/keyrings/wslu.gpg arch=amd64] https://pkg.wslutiliti.es/debian $(distro_codename) main"
+    fi
+}
+
 # --- menu items ---------------------------------------------------------------
 
 register_item repo_microsoft_edge "Repositórios" "Repositório Microsoft Edge"
@@ -95,6 +113,10 @@ install_repo_docker() { ensure_repo_docker; }
 register_item repo_postgresql "Repositórios" "Repositório PostgreSQL (PGDG)"
 check_repo_postgresql() { [[ -f /etc/apt/sources.list.d/postgresql.list ]]; }
 install_repo_postgresql() { ensure_repo_postgresql; }
+
+register_item repo_wslu "Repositórios" "Repositório wslu (WSL Utilities)"
+check_repo_wslu() { [[ -f /etc/apt/sources.list.d/wslu.list ]]; }
+install_repo_wslu() { ensure_repo_wslu; }
 
 # Hidden action (condition "false" keeps it out of every menu): triggered by
 # the [U] shortcut in the main menu.
