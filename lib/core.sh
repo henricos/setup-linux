@@ -154,14 +154,16 @@ apt_install() {
     run_cmd sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
 }
 
-# add_keyring <name> <url> — download and dearmor a signing key.
+# add_keyring <name> <url...> — download one or more keys (concatenated)
+# and dearmor them into a single /etc/apt/keyrings/<name>.gpg.
 # --yes makes re-runs overwrite instead of hanging on a gpg prompt.
 add_keyring() {
-    local name=$1 url=$2
+    local name=$1
+    shift
     command -v gpg >/dev/null 2>&1 || apt_install gnupg
     run_cmd sudo install -d -m 0755 /etc/apt/keyrings
-    show_cmd "curl -fsSL $url | sudo gpg --dearmor --yes -o /etc/apt/keyrings/$name.gpg"
-    curl -fsSL "$url" | sudo gpg --dearmor --yes -o "/etc/apt/keyrings/$name.gpg"
+    show_cmd "curl -fsSL $* | sudo gpg --dearmor --yes -o /etc/apt/keyrings/$name.gpg"
+    curl -fsSL "$@" | sudo gpg --dearmor --yes -o "/etc/apt/keyrings/$name.gpg"
 }
 
 # write_source <name> <deb line> — write the sources file only when its

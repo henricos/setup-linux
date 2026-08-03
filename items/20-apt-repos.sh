@@ -5,9 +5,20 @@
 # installers (items/30-apps.sh, items/40-server.sh), so selection order in
 # the menu never matters. The menu items below are thin wrappers over them.
 
+# Microsoft rotated their apt signing key in spring 2025 (see the README at
+# https://packages.microsoft.com/keys/): repos created before that date
+# (e.g. the msodbcsql18 prod repo on already-released Ubuntu versions) are
+# still signed with the classic microsoft.asc key, but repos created after
+# it (e.g. the prod path for a brand-new Ubuntu release) are signed *only*
+# with the new key in microsoft-rolling.asc. Fetch both into one keyring so
+# apt trusts either, and always refresh rather than skip-if-exists — the
+# refresh is two tiny curl calls, and it lets a machine that already wrote a
+# stale, single-key keyring self-heal on its next run instead of staying
+# broken.
 ensure_microsoft_keyring() {
-    [[ -f /etc/apt/keyrings/microsoft.gpg ]] ||
-        add_keyring microsoft "https://packages.microsoft.com/keys/microsoft.asc"
+    add_keyring microsoft \
+        "https://packages.microsoft.com/keys/microsoft.asc" \
+        "https://packages.microsoft.com/keys/microsoft-rolling.asc"
 }
 
 ensure_repo_microsoft_edge() {

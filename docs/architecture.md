@@ -85,9 +85,12 @@ matters.
 
 - `apt_install` — lazy `apt-get update`: runs once per execution (stamp file),
   re-forced whenever `write_source` changes a sources file.
-- `add_keyring <name> <url>` — downloads and dearmors into
-  `/etc/apt/keyrings/<name>.gpg`. Uses `gpg --dearmor --yes` so re-runs
-  overwrite instead of hanging on a prompt.
+- `add_keyring <name> <url...>` — downloads one or more keys (concatenated)
+  and dearmors them into `/etc/apt/keyrings/<name>.gpg`. Uses
+  `gpg --dearmor --yes` so re-runs overwrite instead of hanging on a prompt.
+  `ensure_microsoft_keyring` passes two URLs (`microsoft.asc` +
+  `microsoft-rolling.asc`) because Microsoft signs pre- and post-2025 repos
+  with different keys — see the comment above it in `items/20-apt-repos.sh`.
 - `write_source <name> <deb line>` — writes
   `/etc/apt/sources.list.d/<name>.list` only when content differs.
 
