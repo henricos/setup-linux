@@ -9,6 +9,16 @@ register_item python3 "Apps" "Python 3 (pip, venv, python-is-python3)"
 check_python3() { command -v python3 >/dev/null && command -v pip3 >/dev/null; }
 install_python3() { apt_install python3 python3-pip python3-venv python-is-python3; }
 
+# uv is a standalone Rust binary: it neither depends on nor installs the
+# apt python3 above, and can manage its own isolated Python interpreters.
+# Kept as its own item so either can be toggled independently.
+register_item uv "Apps" "uv (gerenciador de pacotes/ambientes Python)"
+check_uv() { command -v uv >/dev/null; }
+install_uv() {
+    show_cmd "curl -LsSf https://astral.sh/uv/install.sh | sh"
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+}
+
 # On Ubuntu 24.04+/Debian 12+ gh comes from the distro apt archive. Also a
 # dependency of the dotfiles clone (items/40-config.sh), which installs it
 # on demand.

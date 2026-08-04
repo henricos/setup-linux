@@ -22,7 +22,7 @@ an existing checkout, just run `./setup.sh`.
 |---|---|---|
 | Básico | curl, git, openssh-client | always |
 | Repositórios | Microsoft Edge/VS Code/prod, Google Chrome, Antigravity, DBeaver, Docker, PostgreSQL (PGDG) | always |
-| Apps | unzip, GitHub CLI, Python 3, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, PostgreSQL Client 17, HP drivers, ODBC 18, OpenSSH Server, Docker Engine | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
+| Apps | unzip, GitHub CLI, Python 3, uv, MS Core Fonts, OpenJDK 11/17, Chrome, Edge, VS Code, DBeaver CE, PostgreSQL Client 17, HP drivers, ODBC 18, OpenSSH Server, nvm + Node.js LTS, Docker Engine | OpenJDK 11: Ubuntu-family only; HP drivers: not on WSL |
 | Configurações | repository folders (`~/github/...`, `~/azuregit`), clone of the private [dotfiles](https://github.com/henricos/dotfiles) project (GitHub CLI device-flow auth) | always |
 | WSL | Windows default browser via `wslu`/`wslview` | WSL only |
 
